@@ -1,0 +1,1 @@
+export default function Details(){return <aside className="details"><strong>Built for real workflows</strong><p>Server-side rules protect deadlines and posting limits; email is isolated so provider outages do not destroy business transactions.</p></aside>}
