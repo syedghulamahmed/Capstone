@@ -1,0 +1,1 @@
+import {Request,Response,NextFunction} from "express"; export function requestLogger(req:Request,res:Response,next:NextFunction){const start=performance.now();res.on("finish",()=>console.info(JSON.stringify({method:req.method,path:req.originalUrl,status:res.statusCode,durationMs:Number((performance.now()-start).toFixed(2))})));next()}
