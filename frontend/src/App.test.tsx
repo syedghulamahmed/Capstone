@@ -1,0 +1,1 @@
+import{render,screen}from"@testing-library/react";import{describe,it,expect,vi}from"vitest";import App from"./main";describe("TalentBridge UI",()=>{it("renders the public internship heading",()=>{vi.stubGlobal("fetch",vi.fn().mockResolvedValue({ok:true,json:async()=>({data:[]})}));render(<App/>);expect(screen.getByText("Find work worth building.")).toBeInTheDocument()})});
