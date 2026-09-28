@@ -1,0 +1,1 @@
+export class AppError extends Error{constructor(public status:number,public code:string,message:string){super(message)}} export const conflict=(m:string,c:string)=>new AppError(409,c,m); export const forbidden=(m:string)=>new AppError(403,"FORBIDDEN",m); export const notFound=(m:string)=>new AppError(404,"NOT_FOUND",m);
