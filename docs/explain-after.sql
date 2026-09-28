@@ -1,0 +1,2 @@
+EXPLAIN ANALYZE SELECT id,title,"applicationDeadline" FROM "Internship" WHERE "isActive"=true AND "applicationDeadline">NOW() ORDER BY "applicationDeadline" ASC LIMIT 20;
+-- Run before and after the composite index on the same dataset; record actual plan and execution time.
