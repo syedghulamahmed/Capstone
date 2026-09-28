@@ -3,11 +3,41 @@ on: [push, pull_request]
 jobs:
   test-build:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: talentbridge
+          POSTGRES_PASSWORD: talentbridge
+          POSTGRES_DB: talentbridge
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U talentbridge -d talentbridge"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    env:
+      DATABASE_URL: postgresql://talentbridge:talentbridge@localhost:5432/talentbridge
+      JWT_SECRET: ci-test-access-secret-123456
+      JWT_REFRESH_SECRET: ci-test-refresh-secret-123456
+      CORS_ORIGIN: http://localhost:5173
+      RESEND_API_KEY: ""
+      EMAIL_FROM: "TalentBridge <onboarding@resend.dev>"
+      MAX_ACTIVE_POSTINGS: "5"
+      PORT: "4000"
+      UPLOAD_DIR: "./uploads"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: {node-version: 22}
-      - run: npm install --prefix backend
-      - run: npm install --prefix frontend
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+      - run: npm ci --prefix backend
+      - run: npm ci --prefix frontend
+      - run: npm --prefix backend run migrate
       - run: npm test
       - run: npm run build
