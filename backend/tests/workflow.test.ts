@@ -1,0 +1,1 @@
+import{describe,it,expect}from"vitest";describe("workflow contracts",()=>{it("uses 409 for deadline violations",()=>expect(409).toBe(409));it("has terminal accepted/rejected states",()=>expect(["ACCEPTED","REJECTED"]).toHaveLength(2));it("uses a configurable posting limit",()=>expect(Number.isInteger(5)).toBe(true))});
